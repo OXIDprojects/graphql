@@ -237,7 +237,7 @@ is available for all logged in users:
   $this->permissionsService->checkPermission($token, 'mayreaddata');
 ```
 
-This is all you need to do for a permission check. 
+This is all you need to do for a permission check.
 If the user is missing the permission
 given as a second parameter, an exception is thrown
 which will result in a GraphQL error that informs
@@ -273,7 +273,7 @@ environments.
 After checking the permissions, you should
 keep the logic quite simple. All business
 logic should already be implemented in your
-dao / services classes. Here you shouldn't do anything more 
+dao / services classes. Here you shouldn't do anything more
 than perhaps configure
 service calls according to arguments of
 the query / mutation.
