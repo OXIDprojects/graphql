@@ -51,7 +51,7 @@ you should see the welcome message:
   ```
 
 Example query:
-  ```json
+  ```graphql
     {
       categories {
         id
