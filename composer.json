@@ -1,13 +1,13 @@
 {
-  "name": "oxid-community/graphql-common-types",
-  "description": "OXID GraphQL",
+  "name": "oxid-community/graphql-common",
+  "description": "OXID GraphQL common types objects",
   "type": "oxideshop-module",
   "keywords": ["oxid", "modules", "eShop", "graphql"],
   "homepage": "https://www.oxid-esales.com",
   "license": ["GPL-3.0", "proprietary"],
   "extra": {
     "oxideshop": {
-      "target-directory": "oxcom/graphql-common-types",
+      "target-directory": "oxcom/graphql-common",
       "blacklist-filter": [
         "src/**/*.php",
         "tests/**/*.php"
@@ -24,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "OxidCommunity\\GraphQl\\": "src",
+      "OxidCommunity\\GraphQl\\Common\\": "src",
       "OxidCommunity\\GraphQl\\Tests\\": "tests"
     }
   }

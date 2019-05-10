@@ -324,8 +324,8 @@ services:
     public: false
     autowire: true
 
-  OxidCommunity\GraphQl\Dao\CategoryDaoInterface:
-    class: OxidCommunity\GraphQl\Dao\CategoryDao
+  OxidCommunity\GraphQl\Dao\Common\CategoryDaoInterface:
+    class: OxidCommunity\GraphQl\Dao\Common\CategoryDao
 
   OxidCommunity\GraphQl\Type\ObjectType\CategoryType:
     class: OxidCommunity\GraphQl\Type\ObjectType\CategoryType

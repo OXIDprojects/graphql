@@ -13,12 +13,12 @@ $sMetadataVersion = '2.0';
  * Module information
  */
 $aModule = [
-    'id'            => 'oxcom/graphql-common-types',
-    'title'         => 'OXPS :: <strong style="color: #d64292">GraphQL Common Types</strong>',
+    'id'            => 'oxcom/graphql-common',
+    'title'         => '<strong><span style="color: #d64292">GraphQL</span> Common Types</strong>',
     'description'   =>  [
-        'de' => '<span>The most Common Types of a GraphQL schema,
+        'de' => '<span>Common Types of the GraphQL schema,
                 which just represent a kind of object you can fetch from the service, and what fields it has</span>',
-        'en' => '<span>Die Common Typen eines GraphQL-Schemas,
+        'en' => '<span>Häufige Typen des GraphQL-Schemas,
                 die lediglich eine Art Objekt darstellen, das Sie vom Service abrufen können und welche Felder es enthält</span>',
     ],
     'thumbnail'   => 'out/pictures/graphql.png',
