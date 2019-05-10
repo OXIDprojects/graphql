@@ -1,8 +1,9 @@
-# GraphQL
+# GraphQL Common Types
 
 ## Requirements
 
     * OXID eShop 6.x.x
+    * GraphQL Base Module https://github.com/OXID-eSales/graph-ql-base-module
 
 ## Install using a local repository
 
