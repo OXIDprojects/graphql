@@ -4,13 +4,13 @@
  * See LICENSE file for license details.
  */
 
-namespace  OxidProfessionalServices\GraphQl\Common\Dao;
+namespace  OxidCommunity\GraphQl\Dao;
 
 use OxidEsales\EshopCommunity\Internal\Common\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQl\Exception\ObjectNotFoundException;
 use OxidEsales\GraphQl\Utility\LegacyWrapper;
 use OxidEsales\GraphQl\Utility\LegacyWrapperInterface;
-use OxidProfessionalServices\GraphQl\Common\DataObject\Category;
+use OxidCommunity\GraphQl\DataObject\Category;
 
 class CategoryDao implements CategoryDaoInterface
 {

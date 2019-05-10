@@ -4,9 +4,9 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidProfessionalServices\GraphQl\Tests\Acceptance;
+namespace OxidCommunity\GraphQl\Tests\Acceptance;
 
-use OxidProfessionalServices\GraphQl\Dao\CategoryDaoInterface;
+use OxidCommunity\GraphQl\Dao\CategoryDaoInterface;
 use OxidEsales\GraphQl\Tests\Acceptance\BaseGraphQlAcceptanceTestCase;
 
 class CategoryTest extends BaseGraphQlAcceptanceTestCase
@@ -32,7 +32,7 @@ class CategoryTest extends BaseGraphQlAcceptanceTestCase
     {
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     category (categoryid: "$this->subId1") {
         name
     }
@@ -48,7 +48,7 @@ EOQ;
     {
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     category (categoryid: "nonexistingid") {
         name
     }
@@ -65,7 +65,7 @@ EOQ;
     {
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     categories {
         name
     }
@@ -87,7 +87,7 @@ EOQ;
     {
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     categories (parentid: "$this->rootId") {
         name
     }
@@ -103,7 +103,7 @@ EOQ;
     {
 
         $query = <<<EOQ
-mutation TestMutation { 
+mutation TestMutation {
     addCategory (names: ["Neue Kategorie", "New category"], parentid: "$this->rootId")
 }
 EOQ;
@@ -117,7 +117,7 @@ EOQ;
     {
 
         $query = <<<EOQ
-mutation TestMutation { 
+mutation TestMutation {
     addCategory (names: ["Neue Kategorie", "New category"], parentid: "$this->rootId")
 }
 EOQ;

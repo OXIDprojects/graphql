@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace  OxidProfessionalServices\GraphQl\Common\Type\Provider;
+namespace  OxidCommunity\GraphQl\Type\Provider;
 
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -12,8 +12,8 @@ use OxidEsales\GraphQl\Service\PermissionsServiceInterface;
 use OxidEsales\GraphQl\Type\Provider\MutationProviderInterface;
 use OxidEsales\GraphQl\Type\Provider\QueryProviderInterface;
 use OxidEsales\GraphQl\Framework\AppContext;
-use OxidProfessionalServices\GraphQl\Common\Dao\CategoryDaoInterface;
-use OxidProfessionalServices\GraphQl\Common\Type\ObjectType\CategoryType;
+use OxidCommunity\GraphQl\Dao\CategoryDaoInterface;
+use OxidCommunity\GraphQl\Type\ObjectType\CategoryType;
 
 class CategoryProvider implements QueryProviderInterface, MutationProviderInterface
 {

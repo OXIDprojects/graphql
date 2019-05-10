@@ -1,5 +1,5 @@
 {
-  "name": "oxid-professional-services/graphql",
+  "name": "oxid-community/graphql-common-types",
   "description": "OXID GraphQL",
   "type": "oxideshop-module",
   "keywords": ["oxid", "modules", "eShop", "graphql"],
@@ -7,14 +7,14 @@
   "license": ["GPL-3.0", "proprietary"],
   "extra": {
     "oxideshop": {
-      "target-directory": "oxps/graphql",
+      "target-directory": "oxcom/graphql-common-types",
       "blacklist-filter": [
         "src/**/*.php",
         "tests/**/*.php"
       ]
     }
   },
-  "version": "1.0.2",
+  "version": "0.0.1",
   "require": {
     "php": "^7.0",
     "oxid-esales/graphql-base": "^0"
@@ -24,9 +24,8 @@
   },
   "autoload": {
     "psr-4": {
-      "OxidProfessionalServices\\GraphQl\\Common\\": "src/Common",
-      "OxidProfessionalServices\\GraphQl\\Custom\\": "src/Custom",
-      "OxidProfessionalServices\\GraphQl\\Tests\\": "tests"
+      "OxidCommunity\\GraphQl\\": "src",
+      "OxidCommunity\\GraphQl\\Tests\\": "tests"
     }
   }
 }

@@ -1,4 +1,4 @@
-# GraphQl module
+# GraphQl Common Types module
 
 A simple example module for GraphQl queries and mutations. This is also
 some sort of tutorial how to write a GraphQl module for OXID.
@@ -26,7 +26,7 @@ the `Internal\Application\services.yaml` like this:
     - { resource: ../Adapter/services.yaml }
     - { resource: /var/www/oxideshop/source/modules/oe/graphql-base/services.yaml }
     - { resource: /var/www/oxideshop/source/modules/oe/graphql-developer/services.yaml }
-    - { resource: /var/www/oxideshop/source/modules/oxps/graphql/services.yaml }
+    - { resource: /var/www/oxideshop/source/modules/oxcom/graphql-common-types/services.yaml }
 ```
 
 ## The purpose of this module
@@ -72,11 +72,11 @@ it is quite simple:
  interface CategoryDaoInterface
   {
       public function getCategory(string $categoryId, string $lang, int $shopId);
-  
+
       public function getCategories(string $lang, int $shopId, $parentid = null);
-  
+
       public function addCategory(array $names, int $shopId, string $parentId = null);
-  
+
   }
 ```
 
@@ -177,7 +177,7 @@ and mutations are, refer to the
 
 The provider class must implement at least the
 `QueryProviderInterface` or the `MutationProviderInterface`
-or both. The interfaces are quite simple (the 
+or both. The interfaces are quite simple (the
 `MutationProviderInterface` is analogous):
 
 ```php
@@ -217,7 +217,7 @@ Here is an example from our `CategoryProvider`:
         $token = $context->getAuthToken();
         $this->permissionsService->checkPermission($token, 'mayreaddata');
         return $this->categoryDao->getCategory(
-            $args['categoryid'], 
+            $args['categoryid'],
             $token->getLang(),
             $token->getShopid()
         );
@@ -312,7 +312,7 @@ The configuration is done in a file called
 `services.yaml` that you put into the root
 directory of your module. If you are not
 familiar with the Symfony DI container, you
-should read the 
+should read the
 [documentation](https://symfony.com/doc/3.4/service_container.html).
 
 And this is the configuration file:
@@ -324,17 +324,17 @@ services:
     public: false
     autowire: true
 
-  OxidProfessionalServices\GraphQl\Dao\CategoryDaoInterface:
-    class: OxidProfessionalServices\GraphQl\Dao\CategoryDao
+  OxidCommunity\GraphQl\Dao\CategoryDaoInterface:
+    class: OxidCommunity\GraphQl\Dao\CategoryDao
 
-  OxidProfessionalServices\GraphQl\Type\ObjectType\CategoryType:
-    class: OxidProfessionalServices\GraphQl\Type\ObjectType\CategoryType
+  OxidCommunity\GraphQl\Type\ObjectType\CategoryType:
+    class: OxidCommunity\GraphQl\Type\ObjectType\CategoryType
 
-  OxidProfessionalServices\GraphQl\Type\Provider\CategoryProvider:
-    class: OxidProfessionalServices\GraphQl\Type\Provider\CategoryProvider
+  OxidCommunity\GraphQl\Type\Provider\CategoryProvider:
+    class: OxidCommunity\GraphQl\Type\Provider\CategoryProvider
     tags: ['graphql_query_provider', 'graphql_mutation_provider']
 
-  OxidProfessionalServices\GraphQl\Service\CategoryPermissionsProvider:
+  OxidCommunity\GraphQl\Service\CategoryPermissionsProvider:
     class: OxidEsales\GraphQl\Service\PermissionsProvider
     calls:
       - ['addPermission', ['admin', 'mayaddcategory']]
@@ -378,7 +378,7 @@ module together with a descriptive name makes sense.
 The class itself is always the same, the `PermissionsProvider`
 class that comes with the OXID GraphQl framework.
 And now you can add permissions in the call section.
-The method, that is called, is named appropriately 
+The method, that is called, is named appropriately
 `addPermission`, and the first parameter is the user
 group, the second a permission (which is just the
 string you use in your permission check in the
@@ -394,7 +394,7 @@ Currently there are four user groups:
 <dt>shopadmin:</dt>
   <dd>a user with administration rights for a certain shop</dd>
 <dt>admin:</dt>
-  <dd>a user with global administration rights</dd> 
+  <dd>a user with global administration rights</dd>
 </dl>
 
 Look at the `services.yaml` file of the OXID graphql base
@@ -417,7 +417,7 @@ of the test case:
   receive
 * `$this->logResult` contains all errors that are normally
   written to the log file
-  
+
 This allows you to write nearly complete end to end
 tests without involving an http server.
 
@@ -429,7 +429,7 @@ directory of your project should have the following entries:
 ```yaml
 mandatory_parameters:
     ...
-    partial_module_paths: 'oe/graphql-base,oxps/graphql'
+    partial_module_paths: 'oe/graphql-base,oxcom/graphql-common-types'
     ...
 optional_parameters:
     ...

@@ -4,11 +4,11 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidProfessionalServices\GraphQl\Tests\Integration\Dao;
+namespace OxidCommunity\GraphQl\Tests\Integration\Dao;
 
 use OxidEsales\GraphQl\Exception\ObjectNotFoundException;
-use OxidProfessionalServices\GraphQl\Dao\CategoryDao;
-use OxidProfessionalServices\GraphQl\Dao\CategoryDaoInterface;
+use OxidCommunity\GraphQl\Dao\CategoryDao;
+use OxidCommunity\GraphQl\Dao\CategoryDaoInterface;
 use OxidEsales\GraphQl\Tests\Integration\ContainerTrait;
 
 class CategoryDaoTest extends \PHPUnit_Framework_TestCase
@@ -67,7 +67,7 @@ class CategoryDaoTest extends \PHPUnit_Framework_TestCase
         $rootCategories = $this->categoryDao->getCategories('de', 1);
         $found = false;
         foreach ($rootCategories as $rootCategory) {
-            /** @var \OxidProfessionalServices\GraphQl\DataObject\Category $rootCategory */
+            /** @var \OxidCommunity\GraphQl\DataObject\Category $rootCategory */
             if ($rootCategory->getId() == $this->categoryIdRoot) {
                 $found = true;
             }

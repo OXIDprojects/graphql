@@ -1,24 +1,24 @@
 services:
 
-  OxidProfessionalServices\GraphQl\Common\Dao\CategoryDaoInterface:
-    class: OxidProfessionalServices\GraphQl\Common\Dao\CategoryDao
+  OxidCommunity\GraphQl\Dao\CategoryDaoInterface:
+    class: OxidCommunity\GraphQl\Dao\CategoryDao
     public: false
     autowire: true
 
-  OxidProfessionalServices\GraphQl\Common\Type\ObjectType\CategoryType:
-    class: OxidProfessionalServices\GraphQl\Common\Type\ObjectType\CategoryType
+  OxidCommunity\GraphQl\Type\ObjectType\CategoryType:
+    class: OxidCommunity\GraphQl\Type\ObjectType\CategoryType
     public: false
     autowire: true
 
-  OxidProfessionalServices\GraphQl\Common\Type\Provider\CategoryProvider:
-    class: OxidProfessionalServices\GraphQl\Common\Type\Provider\CategoryProvider
+  OxidCommunity\GraphQl\Type\Provider\CategoryProvider:
+    class: OxidCommunity\GraphQl\Type\Provider\CategoryProvider
     public: false
     autowire: true
     tags:
       - {name: 'graphql_query_provider'}
       - {name: 'graphql_mutation_provider'}
 
-  OxidProfessionalServices\GraphQl\Common\Service\CategoryPermissionsProvider:
+  OxidCommunity\GraphQl\Service\CategoryPermissionsProvider:
     class: OxidEsales\GraphQl\Service\PermissionsProvider
     public: false
     autowire: true

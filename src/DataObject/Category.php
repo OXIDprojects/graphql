@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidProfessionalServices\GraphQl\Common\DataObject;
+namespace OxidCommunity\GraphQl\DataObject;
 
 class Category
 {

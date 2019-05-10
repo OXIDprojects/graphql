@@ -5,14 +5,14 @@ declare(strict_types=1);
  * See LICENSE file for license details.
  */
 
-namespace  OxidProfessionalServices\GraphQl\Custom\Type\ObjectType;
+namespace  OxidCommunity\GraphQl\Type\ObjectType;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use OxidEsales\GraphQl\Framework\GenericFieldResolverInterface;
 
-class LocationType extends ObjectType
+class CategoryType extends ObjectType
 {
 
     /**
@@ -21,7 +21,7 @@ class LocationType extends ObjectType
     private $genericFieldResolver;
 
     /**
-     * ZipCodeType constructor.
+     * CategoryType constructor.
      * @param GenericFieldResolverInterface $genericFieldResolver
      */
     public function __construct(GenericFieldResolverInterface $genericFieldResolver)
@@ -29,12 +29,15 @@ class LocationType extends ObjectType
         $this->genericFieldResolver = $genericFieldResolver;
 
         $config = [
-            'name'         => 'Location',
-            'description'  => 'Primitive location object',
+            'name'         => 'Category',
+            'description'  => 'Primitive category object',
             'fields'       => [
-                'id' => Type::int(),
-                'name' => Type::string(),
-                'region' => Type::string()
+                'id'       => Type::string(),
+                'name'     => Type::string(),
+                'parentId' => [
+                    'type' => Type::string(),
+                    'defaultValue' => 'oxrootid'
+                ]
             ],
             'resolveField' => function ($value, $args, $context, ResolveInfo $info) {
                 return $this->genericFieldResolver->getField($info->fieldName, $value);

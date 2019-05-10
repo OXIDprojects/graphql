@@ -4,7 +4,7 @@
  * See LICENSE file for license details.
  */
 
-namespace  OxidProfessionalServices\GraphQl\Common\Dao;
+namespace  OxidCommunity\GraphQl\Dao;
 
 interface CategoryDaoInterface
 {

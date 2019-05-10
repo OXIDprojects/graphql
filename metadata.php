@@ -13,14 +13,16 @@ $sMetadataVersion = '2.0';
  * Module information
  */
 $aModule = [
-    'id'            => 'oxps/graphql',
-    'title'         => 'OXPS :: <strong style="color: #d64292">GraphQL</strong>',
+    'id'            => 'oxcom/graphql-common-types',
+    'title'         => 'OXPS :: <strong style="color: #d64292">GraphQL Common Types</strong>',
     'description'   =>  [
-        'de' => '<span>The OXID reference implementation for GraphQL, a query language for APIs.</span>',
-        'en' => '<span>Die OXID-Referenzimplementierung für GraphQL, eine Abfragesprache für APIs.</span>',
+        'de' => '<span>The most Common Types of a GraphQL schema,
+                which just represent a kind of object you can fetch from the service, and what fields it has</span>',
+        'en' => '<span>Die Common Typen eines GraphQL-Schemas,
+                die lediglich eine Art Objekt darstellen, das Sie vom Service abrufen können und welche Felder es enthält</span>',
     ],
     'thumbnail'   => 'out/pictures/graphql.png',
-    'version'     => '1.0.2',
+    'version'     => '0.0.1',
     'author'      => 'OXID eSales',
     'url'         => 'www.oxid-esales.com',
     'email'       => 'info@oxid-esales.com',

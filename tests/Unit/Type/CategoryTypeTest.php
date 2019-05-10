@@ -4,14 +4,14 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidProfessionalServices\GraphQl\Tests\Unit\Type;
+namespace OxidCommunity\GraphQl\Tests\Unit\Type;
 
 use OxidEsales\GraphQl\Framework\GenericFieldResolver;
 use OxidEsales\GraphQl\Framework\SchemaFactory;
-use OxidProfessionalServices\GraphQl\Dao\CategoryDaoInterface;
-use OxidProfessionalServices\GraphQl\DataObject\Category;
-use OxidProfessionalServices\GraphQl\Type\ObjectType\CategoryType;
-use OxidProfessionalServices\GraphQl\Type\Provider\CategoryProvider;
+use OxidCommunity\GraphQl\Dao\CategoryDaoInterface;
+use OxidCommunity\GraphQl\DataObject\Category;
+use OxidCommunity\GraphQl\Type\ObjectType\CategoryType;
+use OxidCommunity\GraphQl\Type\Provider\CategoryProvider;
 use OxidEsales\GraphQl\Tests\Unit\Type\GraphQlTypeTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -58,7 +58,7 @@ class CategoryTypeTest extends GraphQlTypeTestCase
         $this->categoryDao->method('getCategory')->with('someid', 'de')->willReturn($category);
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     category (categoryid: "someid") {
         name
     }
@@ -78,7 +78,7 @@ EOQ;
             ->willThrowException(new \Exception('Category not found.'));
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     category (categoryid: "nonexistingid") {
         name
     }
@@ -93,7 +93,7 @@ EOQ;
     public function testGetCategoryWithoutPermission() {
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     category (categoryid: "someid") {
         name
     }
@@ -123,7 +123,7 @@ EOQ;
             ->willReturn([$category1, $category2]);
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     categories (parentid: "parentid") {
         id
     }
@@ -144,7 +144,7 @@ EOQ;
             ->willReturn([]);
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     categories (parentid: "parentid") {
         id
     }
@@ -159,7 +159,7 @@ EOQ;
     public function testGetCategoriesNoPermission() {
 
         $query = <<<EOQ
-query TestQuery { 
+query TestQuery {
     categories (parentid: "parentid") {
         id
     }
@@ -192,7 +192,7 @@ EOQ;
         $this->categoryDao->method('addCategory')->willReturnCallback([$this, 'addCategory']);
 
         $query = <<<EOQ
-mutation TestQuery { 
+mutation TestQuery {
     addCategory (names: ["Name lang 1", "Name lang 2"])
 }
 EOQ;
@@ -208,7 +208,7 @@ EOQ;
     public function testAddCategoryMissingPermission() {
 
         $query = <<<EOQ
-mutation TestQuery { 
+mutation TestQuery {
     addCategory (names: ["Name lang 1", "Name lang 2"])
 }
 EOQ;
@@ -230,7 +230,7 @@ EOQ;
         $this->categoryDao->method('addCategory')->willReturnCallback([$this, 'addCategory']);
 
         $query = <<<EOQ
-mutation TestQuery { 
+mutation TestQuery {
     addCategory (names: ["Name lang 1", "Name lang 2"], parentid: "someparentid")
 }
 EOQ;
