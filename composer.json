@@ -1,28 +1,32 @@
 {
   "name": "oxid-professional-services/graphql",
-  "description": "OXID CRUD API module",
+  "description": "OXID GraphQL",
   "type": "oxideshop-module",
-  "keywords": ["oxid", "modules", "eShop"],
+  "keywords": ["oxid", "modules", "eShop", "graphql"],
   "homepage": "https://www.oxid-esales.com",
   "license": ["GPL-3.0", "proprietary"],
   "extra": {
     "oxideshop": {
       "target-directory": "oxps/graphql",
       "blacklist-filter": [
-        "node_modules/**/*.*"
+        "src/**/*.php",
+        "tests/**/*.php"
       ]
     }
   },
-  "version": "0.0.1",
+  "version": "1.0.2",
   "require": {
     "php": "^7.0",
-    "webonyx/graphql-php": "^0.12.6",
-    "firebase/php-jwt": "^5.0"
+    "oxid-esales/graphql-base": "^0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6"
   },
   "autoload": {
     "psr-4": {
-      "OxidProfessionalServices\\GraphQl\\": "../../../source/modules/oxps/graphql"
+      "OxidProfessionalServices\\GraphQl\\Common\\": "src/Common",
+      "OxidProfessionalServices\\GraphQl\\Custom\\": "src/Custom",
+      "OxidProfessionalServices\\GraphQl\\Tests\\": "tests"
     }
   }
 }
-
