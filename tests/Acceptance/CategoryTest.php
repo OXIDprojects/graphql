@@ -12,28 +12,29 @@ use OxidEsales\GraphQl\Tests\Acceptance\BaseGraphQlAcceptanceTestCase;
 class CategoryTest extends BaseGraphQlAcceptanceTestCase
 {
 
-    private $rootId;
+    private $rootCategory;
 
-    private $subId1;
+    private $subCategory1;
 
-    private $subId2;
+    private $subCategory2;
 
     public function setUp()
     {
         parent::setUp();
         /** @var CategoryDaoInterface $categoryDao */
         $categoryDao = $this->container->get(CategoryDaoInterface::class);
-        $this->rootId = $categoryDao->addCategory(["rootcategory"], $this->getShopId());
-        $this->subId1 = $categoryDao->addCategory(["subcategory1"], $this->getShopId(), $this->rootId);
-        $this->subId2 = $categoryDao->addCategory(["subcategory2"], $this->getShopId(), $this->rootId);
+        $this->rootCategory = $categoryDao->addCategory(["rootcategory"], $this->getShopId(), 'de');
+        $this->subCategory1 = $categoryDao->addCategory(["subcategory1"], $this->getShopId(), 'de', $this->rootCategory->getId());
+        $this->subCategory2 = $categoryDao->addCategory(["subcategory2"], $this->getShopId(), 'de', $this->rootCategory->getId());
     }
 
     public function testGetCategory()
     {
+        $catId = $this->subCategory1->getId();
 
         $query = <<<EOQ
 query TestQuery {
-    category (categoryid: "$this->subId1") {
+    category (categoryId: "$catId") {
         name
     }
 }
@@ -49,7 +50,7 @@ EOQ;
 
         $query = <<<EOQ
 query TestQuery {
-    category (categoryid: "nonexistingid") {
+    category (categoryId: "nonexistingid") {
         name
     }
 }
@@ -85,10 +86,11 @@ EOQ;
 
     public function testGetCategories()
     {
+        $catId = $this->rootCategory->getId();
 
         $query = <<<EOQ
 query TestQuery {
-    categories (parentid: "$this->rootId") {
+    categories (parentId: "$catId") {
         name
     }
 }
@@ -101,24 +103,34 @@ EOQ;
 
     public function testAddCategory()
     {
+        $catId = $this->rootCategory->getId();
 
         $query = <<<EOQ
 mutation TestMutation {
-    addCategory (names: ["Neue Kategorie", "New category"], parentid: "$this->rootId")
+    addCategory (names: ["Neue Kategorie", "New category"]){
+        id
+        name
+        parentId
+    }
 }
 EOQ;
         $this->executeQuery($query, 'admin');
 
         $this->assertHttpStatusOK();
-        $this->assertEquals(32, strlen($this->queryResult['data']['addCategory']));
+        $this->assertEquals(3, sizeof($this->queryResult['data']['addCategory']));
     }
 
     public function testAddCategoryNoPermission()
     {
+        $catId = $this->rootCategory->getId();
 
         $query = <<<EOQ
 mutation TestMutation {
-    addCategory (names: ["Neue Kategorie", "New category"], parentid: "$this->rootId")
+    addCategory (names: ["Neue Kategorie", "New category"], parentId: "$catId"){
+        id
+        name
+        parentId
+    }
 }
 EOQ;
         $this->executeQuery($query, 'customer');

@@ -113,7 +113,7 @@ class CategoryProvider implements QueryProviderInterface, MutationProviderInterf
                 $token = $context->getAuthToken();
                 $this->permissionsService->checkPermission($token, 'mayaddcategory');
 
-                return $this->categoryDao->addCategory($args['names'], $token->getShopid(), $args['parentId'], $token->getLang());
+                return $this->categoryDao->addCategory($args['names'], $token->getShopid(), $token->getLang(), $args['parentId']);
             }
         ];
     }

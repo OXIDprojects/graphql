@@ -20,15 +20,6 @@ class CategoryTypeTest extends GraphQlTypeTestCase
     /** @var  CategoryDaoInterface|MockObject */
     private $categoryDao;
 
-    /** @var  array */
-    private $names;
-
-    /** @var  int */
-    private $shopId;
-
-    /** @var  string|null */
-    private $parentId;
-
     /** @var Category $category */
     private $category;
 
@@ -54,22 +45,22 @@ class CategoryTypeTest extends GraphQlTypeTestCase
         $this->addPermission($this::DEFAULTGROUP, 'mayreaddata');
 
         $category = new Category();
-        $category->setId('someId');
-        $category->setName('someName');
-        $category->setParentId('someparentId');
+        $category->setId('someid');
+        $category->setName('somename');
+        $category->setParentId('someparentid');
 
-        $this->categoryDao->method('getCategory')->with('someId', 'de')->willReturn($category);
+        $this->categoryDao->method('getCategory')->with('someid', 'de')->willReturn($category);
 
         $query = <<<EOQ
 query TestQuery {
-    category (categoryId: "someId") {
+    category (categoryId: "someid") {
         name
     }
 }
 EOQ;
         $result = $this->executeQuery($query);
         $this->assertEquals(0, sizeof($result->errors), $result->errors[0]);
-        $this->assertEquals('someName', $result->data['category']['name']);
+        $this->assertEquals('somename', $result->data['category']['name']);
 
     }
 
@@ -97,7 +88,7 @@ EOQ;
 
         $query = <<<EOQ
 query TestQuery {
-    category (categoryId: "someId") {
+    category (categoryId: "someid") {
         name
     }
 }
@@ -174,10 +165,10 @@ EOQ;
 
     }
 
-    public function addCategory($names, $shopId, $parentId=null) {
+    public function addCategory($names, $shopId, $lang, $parentId=null) {
 
         $this->category = new Category();
-        $this->category->setId('someIdString');
+        $this->category->setId('someidstring');
         $this->category->setName($names[0]);
         $this->category->setParentId($parentId);
 
@@ -204,7 +195,7 @@ EOQ;
         $result = $this->executeQuery($query);
 
         $this->assertEquals(0, sizeof($result->errors), $result->errors[0]);
-        $this->assertEquals('someIdString', $result->data['addCategory']['id']);
+        $this->assertEquals('someidstring', $result->data['addCategory']['id']);
         $this->assertEquals('Name lang 1', $result->data['addCategory']['name']);
         $this->assertEquals('oxrootid', $result->data['addCategory']['parentId']);
 
@@ -236,7 +227,7 @@ EOQ;
 
         $query = <<<EOQ
 mutation TestMutation {
-    addCategory (names: ["Name lang 1", "Name lang 2"], parentId: "someParentId"){
+    addCategory (names: ["Name lang 1", "Name lang 2"], parentId: "someparentid"){
         id 
         name 
         parentId
@@ -247,9 +238,9 @@ EOQ;
         $result = $this->executeQuery($query);
 
         $this->assertEquals(0, sizeof($result->errors), $result->errors[0]);
-        $this->assertEquals('someIdString', $result->data['addCategory']['id']);
+        $this->assertEquals('someidstring', $result->data['addCategory']['id']);
         $this->assertEquals('Name lang 1', $result->data['addCategory']['name']);
-        $this->assertEquals('someParentId', $result->data['addCategory']['parentId']);
+        $this->assertEquals('someparentid', $result->data['addCategory']['parentId']);
 
     }
 }
