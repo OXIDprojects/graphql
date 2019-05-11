@@ -28,17 +28,20 @@ Every field, object, or argument has a type. GraphQL is a strongly typed languag
 - LoginType
 - UserType
 
-### Common and Custom
+### Common Types
 Your common and custom types are usually built on top of GraphQL system types.
 - CategoryType
 - **and more ...**
+
+ ### Custom Types
+Types created specifically according to the needs for each project
 
 This README provides step by step instructions on how to implement
 things.
 
 The **graph-ql-base-module** is the primary framework for using GraphQL in OXID
 
-## Common Types
+## Example
 
 ### Category Type
 We want to be able to get category listings from the shop and also to be able, to add a new category to the shop. So in GraphQL terminology: We want to have some queries (get) and a mutation (push, update, delete).
