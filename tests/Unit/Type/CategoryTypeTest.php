@@ -8,10 +8,10 @@ namespace OxidCommunity\GraphQl\Tests\Unit\Type;
 
 use OxidEsales\GraphQl\Framework\GenericFieldResolver;
 use OxidEsales\GraphQl\Framework\SchemaFactory;
-use OxidCommunity\GraphQl\Dao\CategoryDaoInterface;
-use OxidCommunity\GraphQl\DataObject\Category;
-use OxidCommunity\GraphQl\Type\ObjectType\CategoryType;
-use OxidCommunity\GraphQl\Type\Provider\CategoryProvider;
+use OxidCommunity\GraphQl\Common\Dao\CategoryDaoInterface;
+use OxidCommunity\GraphQl\Common\DataObject\Category;
+use OxidCommunity\GraphQl\Common\Type\ObjectType\CategoryType;
+use OxidCommunity\GraphQl\Common\Type\Provider\CategoryProvider;
 use OxidEsales\GraphQl\Tests\Unit\Type\GraphQlTypeTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -24,10 +24,13 @@ class CategoryTypeTest extends GraphQlTypeTestCase
     private $names;
 
     /** @var  int */
-    private $shopid;
+    private $shopId;
 
     /** @var  string|null */
-    private $parentid;
+    private $parentId;
+
+    /** @var Category $category */
+    private $category;
 
     public function setUp()
     {
@@ -51,22 +54,22 @@ class CategoryTypeTest extends GraphQlTypeTestCase
         $this->addPermission($this::DEFAULTGROUP, 'mayreaddata');
 
         $category = new Category();
-        $category->setId('someid');
-        $category->setName('somename');
-        $category->setParentId('someparentid');
+        $category->setId('someId');
+        $category->setName('someName');
+        $category->setParentId('someparentId');
 
-        $this->categoryDao->method('getCategory')->with('someid', 'de')->willReturn($category);
+        $this->categoryDao->method('getCategory')->with('someId', 'de')->willReturn($category);
 
         $query = <<<EOQ
 query TestQuery {
-    category (categoryid: "someid") {
+    category (categoryId: "someId") {
         name
     }
 }
 EOQ;
         $result = $this->executeQuery($query);
         $this->assertEquals(0, sizeof($result->errors), $result->errors[0]);
-        $this->assertEquals('somename', $result->data['category']['name']);
+        $this->assertEquals('someName', $result->data['category']['name']);
 
     }
 
@@ -79,7 +82,7 @@ EOQ;
 
         $query = <<<EOQ
 query TestQuery {
-    category (categoryid: "nonexistingid") {
+    category (categoryId: "nonexistingid") {
         name
     }
 }
@@ -94,7 +97,7 @@ EOQ;
 
         $query = <<<EOQ
 query TestQuery {
-    category (categoryid: "someid") {
+    category (categoryId: "someId") {
         name
     }
 }
@@ -112,19 +115,19 @@ EOQ;
         $category1 = new Category();
         $category1->setId('id1');
         $category1->setName('name1');
-        $category1->setParentId('parentid');
+        $category1->setParentId('parentId');
 
         $category2 = new Category();
         $category2->setId('id2');
         $category2->setName('name2');
-        $category2->setParentId('parentid');
+        $category2->setParentId('parentId');
 
-        $this->categoryDao->method('getCategories')->with('de', 1, 'parentid')
+        $this->categoryDao->method('getCategories')->with('de', 1, 'parentId')
             ->willReturn([$category1, $category2]);
 
         $query = <<<EOQ
 query TestQuery {
-    categories (parentid: "parentid") {
+    categories (parentId: "parentId") {
         id
     }
 }
@@ -140,12 +143,12 @@ EOQ;
 
         $this->addPermission($this::DEFAULTGROUP, 'mayreaddata');
 
-        $this->categoryDao->method('getCategories')->with('de', 1, 'parentid')
+        $this->categoryDao->method('getCategories')->with('de', 1, 'parentId')
             ->willReturn([]);
 
         $query = <<<EOQ
 query TestQuery {
-    categories (parentid: "parentid") {
+    categories (parentId: "parentId") {
         id
     }
 }
@@ -160,7 +163,7 @@ EOQ;
 
         $query = <<<EOQ
 query TestQuery {
-    categories (parentid: "parentid") {
+    categories (parentId: "parentId") {
         id
     }
 }
@@ -171,47 +174,54 @@ EOQ;
 
     }
 
-    public function addCategory($names, $shopid, $parentid=null) {
+    public function addCategory($names, $shopId, $parentId=null) {
 
-        $this->names = $names;
-        $this->parentid = $parentid;
-        $this->shopid = $shopid;
+        $this->category = new Category();
+        $this->category->setId('someIdString');
+        $this->category->setName($names[0]);
+        $this->category->setParentId($parentId);
 
-        return "someidstring";
+        return $this->category;
 
     }
 
     public function testAddRootCategory() {
 
-        $this->names = null;
-        $this->parentid = null;
-        $this->shopid = null;
-
+        $this->category = null;
         $this->addPermission($this::DEFAULTGROUP, 'mayaddcategory');
-
         $this->categoryDao->method('addCategory')->willReturnCallback([$this, 'addCategory']);
 
         $query = <<<EOQ
-mutation TestQuery {
-    addCategory (names: ["Name lang 1", "Name lang 2"])
+mutation TestMutation {
+    addCategory (names: ["Name lang 1", "Name lang 2"]){
+        id 
+        name 
+        parentId
+    }
 }
 EOQ;
+
         $result = $this->executeQuery($query);
+
         $this->assertEquals(0, sizeof($result->errors), $result->errors[0]);
-        $this->assertEquals('someidstring', $result->data['addCategory']);
-        $this->assertEquals('Name lang 1', $this->names[0]);
-        $this->assertNull($this->parentid);
-        $this->assertEquals(1, $this->shopid);
+        $this->assertEquals('someIdString', $result->data['addCategory']['id']);
+        $this->assertEquals('Name lang 1', $result->data['addCategory']['name']);
+        $this->assertEquals('oxrootid', $result->data['addCategory']['parentId']);
 
     }
 
     public function testAddCategoryMissingPermission() {
 
         $query = <<<EOQ
-mutation TestQuery {
-    addCategory (names: ["Name lang 1", "Name lang 2"])
+mutation TestMutation {
+    addCategory (names: ["Name lang 1", "Name lang 2"]){
+        id 
+        name 
+        parentId
+    }
 }
 EOQ;
+
         $result = $this->executeQuery($query);
 
         $this->assertEquals(1, sizeof($result->errors));
@@ -221,25 +231,25 @@ EOQ;
 
     public function testAddSubCategory() {
 
-        $this->names = null;
-        $this->parentid = null;
-        $this->shopid = null;
-
         $this->addPermission($this::DEFAULTGROUP, 'mayaddcategory');
-
         $this->categoryDao->method('addCategory')->willReturnCallback([$this, 'addCategory']);
 
         $query = <<<EOQ
-mutation TestQuery {
-    addCategory (names: ["Name lang 1", "Name lang 2"], parentid: "someparentid")
+mutation TestMutation {
+    addCategory (names: ["Name lang 1", "Name lang 2"], parentId: "someParentId"){
+        id 
+        name 
+        parentId
+    }
 }
 EOQ;
+
         $result = $this->executeQuery($query);
+
         $this->assertEquals(0, sizeof($result->errors), $result->errors[0]);
-        $this->assertEquals('someidstring', $result->data['addCategory']);
-        $this->assertEquals('Name lang 1', $this->names[0]);
-        $this->assertEquals('someparentid', $this->parentid);
-        $this->assertEquals(1, $this->shopid);
+        $this->assertEquals('someIdString', $result->data['addCategory']['id']);
+        $this->assertEquals('Name lang 1', $result->data['addCategory']['name']);
+        $this->assertEquals('someParentId', $result->data['addCategory']['parentId']);
 
     }
 }

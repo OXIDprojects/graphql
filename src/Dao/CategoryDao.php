@@ -71,7 +71,7 @@ class CategoryDao implements CategoryDaoInterface
      * @param null $parentId
      * @return array
      */
-    public function getCategories(string $lang, int $shopId, $parentId=null)
+    public function getCategories(string $lang, int $shopId, string $parentId = null)
     {
         $viewName = 'oxv_oxcategories_' . $lang;
         $queryBuilder = $this->queryBuilderFactory->create();
@@ -82,8 +82,14 @@ class CategoryDao implements CategoryDaoInterface
                         $queryBuilder->expr()->eq('OXSHOPID', ':shopid')
                     )
                 )
-            ->setParameter('shopid', $shopId)
-            ->setParameter('oxparentid', $parentId);
+            ->setParameter('shopid', $shopId);
+
+        if ($parentId === null) {
+            $queryBuilder->setParameter('oxparentid', 'oxrootid');
+        }
+        else {
+            $queryBuilder->setParameter('oxparentid', $parentId);
+        }
 
         $result = $queryBuilder->execute();
         $categoryList = [];
@@ -102,18 +108,25 @@ class CategoryDao implements CategoryDaoInterface
      * @return Category
      * @throws ObjectNotFoundException
      */
-    public function addCategory(array $names, int $shopId, string $parentId, string $lang): Category
+    public function addCategory(array $names, int $shopId, string $lang, string $parentId = null): Category
     {
 
         $queryBuilder = $this->queryBuilderFactory->create();
-        $values = ['OXSHOPID' => ':shopid', 'OXTITLE' => ':title', 'OXPARENTID' => ':parentId'];
+        $values = ['OXSHOPID' => ':shopid', 'OXTITLE' => ':title'];
         $queryBuilder->setParameter('title', $names[0]);
 
         for ($i = 1; $i < sizeof($names); $i++) {
             $values["OXTITLE_$i"] = ":title_$i";
             $queryBuilder->setParameter("title_$i", $names[$i]);
         }
-        $queryBuilder->setParameter('parentId', $parentId);
+
+        $values['OXPARENTID'] = ':parentid';
+        if ($parentId === null) {
+            $queryBuilder->setParameter('parentid', 'oxrootid');
+        }
+        else {
+            $queryBuilder->setParameter('parentid', $parentId);
+        }
 
         $values['OXID'] = ':oxid';
         $id = $this->legacyWrapper->createUid();

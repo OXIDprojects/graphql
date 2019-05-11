@@ -1,6 +1,6 @@
 {
   "name": "oxid-community/graphql-common",
-  "description": "OXID GraphQL common types objects",
+  "description": "OXID GraphQL common types",
   "type": "oxideshop-module",
   "keywords": ["oxid", "modules", "eShop", "graphql"],
   "homepage": "https://www.oxid-esales.com",
@@ -9,8 +9,7 @@
     "oxideshop": {
       "target-directory": "oxcom/graphql-common",
       "blacklist-filter": [
-        "src/**/*.php",
-        "tests/**/*.php"
+        "src/**/*.php"
       ]
     }
   },

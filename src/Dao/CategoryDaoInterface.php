@@ -10,8 +10,8 @@ interface CategoryDaoInterface
 {
     public function getCategory(string $categoryId, string $lang, int $shopId);
 
-    public function getCategories(string $lang, int $shopId, $parentId = null);
+    public function getCategories(string $lang, int $shopId, string $parentId = null);
 
-    public function addCategory(array $names, int $shopId, string $parentId, string $lang);
+    public function addCategory(array $names, int $shopId, string $lang, string $parentId = null);
 
 }

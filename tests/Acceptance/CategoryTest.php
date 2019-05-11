@@ -6,7 +6,7 @@
 
 namespace OxidCommunity\GraphQl\Tests\Acceptance;
 
-use OxidCommunity\GraphQl\Dao\CategoryDaoInterface;
+use OxidCommunity\GraphQl\Common\Dao\CategoryDaoInterface;
 use OxidEsales\GraphQl\Tests\Acceptance\BaseGraphQlAcceptanceTestCase;
 
 class CategoryTest extends BaseGraphQlAcceptanceTestCase
