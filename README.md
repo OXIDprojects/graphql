@@ -1,35 +1,44 @@
-# GraphQL Common Types module
+# GraphQL Common Types
 
 A basis module for GraphQL queries and mutations. This is also
 some sort of tutorial on how to write a GraphQL module for OXID.
+
+## Type System
+
+Object Type is the most frequently used primitive in the GraphQL Schema.
+
+Conceptually Object Type is a collection of Fields. Each field, in turn, has its own type which allows building complex hierarchies.
+
+Every field, object, or argument has a type. GraphQL is a strongly typed language. In the Oxid Schema are 4 kind of types defined specifically for the application:
+
+- **System Types**
+- **Base Types**
+- **Common types**
+- **Custom types**
+
+### System Types
+- Int
+- Float
+- String
+- Boolean
+- Id (serialized as String per spec)
+
+### Base Types
+- AddressType
+- LoginType
+- UserType
+
+### Common and Custom
+Your common and custom types are usually built on top of GraphQL system types.
+- CategoryType
+- and more ...
 
 This README provides step by step instructions on how to implement
 things.
 
 The **graph-ql-base-module** is the primary framework for using GraphQL in OXID
 
-The code in this branch is altered to be backward compatible
-with the 6.1.3 compilation. You need to add the `service.yaml`
-files of this and all the other graphql modules you are
-using manually to the DI container (the feature to do this
-automatically on module installation will be available
-in the next minor release). This can be done in
-the `Internal\Application\services.yaml` like this:
-
-```yaml
-  imports:
-    - { resource: ../Utility/services.yaml }
-    - { resource: ../Logger/services.yaml }
-    - { resource: ../Common/services.yaml }
-    - { resource: ../Review/services.yaml }
-    - { resource: ../Form/services.yaml }
-    - { resource: ../Adapter/services.yaml }
-    - { resource: /var/www/oxideshop/source/modules/oe/graphql-base/services.yaml }
-    - { resource: /var/www/oxideshop/source/modules/oe/graphql-developer/services.yaml }
-    - { resource: /var/www/oxideshop/source/modules/oxcom/graphql-common-types/services.yaml }
-```
-
-## Common Object Types
+## Common Types
 
 ### Category Type
 We want to be able to get category listings from the shop and also to be able, to add a new category to the shop. So in GraphQL terminology: We want to have some queries (get) and a mutation (push, update, delete).
@@ -214,7 +223,7 @@ Here is an example of our `CategoryProvider`:
         $token = $context->getAuthToken();
         $this->permissionsService->checkPermission($token, 'mayreaddata');
         return $this->categoryDao->getCategory(
-            $args['categoryid'],
+            $args['categoryId'],
             $token->getLang(),
             $token->getShopid()
         );
