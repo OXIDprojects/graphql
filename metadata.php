@@ -16,9 +16,9 @@ $aModule = [
     'id'            => 'oxcom/graphql-common',
     'title'         => '<span style="color: #d64292">GraphQL</span> Common Types',
     'description'   =>  [
-        'en' => '<span>Common Object Types of the GraphQL schema,
+        'en' => '<span>Common Types of the GraphQL schema,
                 which just represent a kind of object you can fetch from the service, and what fields it has</span>',
-        'de' => '<span>Häufige Objekt Typen des GraphQL-Schemas,
+        'de' => '<span>Häufige Typen des GraphQL-Schemas,
                 die lediglich eine Art Objekt darstellen, das Sie vom Service abrufen können und welche Felder es enthält</span>',
     ],
     'thumbnail'   => 'out/pictures/graphql.png',
