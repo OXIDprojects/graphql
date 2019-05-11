@@ -31,7 +31,7 @@ Every field, object, or argument has a type. GraphQL is a strongly typed languag
 ### Common and Custom
 Your common and custom types are usually built on top of GraphQL system types.
 - CategoryType
-- and more ...
+- **and more ...**
 
 This README provides step by step instructions on how to implement
 things.
