@@ -1,2 +1,3 @@
 imports:
   - { resource: src/Service/Category/services.yaml }
+  # - { resource: src/Service/NEWTYPE/services.yaml }
