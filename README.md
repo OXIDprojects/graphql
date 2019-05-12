@@ -13,8 +13,8 @@ Every field, object, or argument has a type. GraphQL is a strongly typed languag
 
 - **System Types**
 - **Base Types**
-- **Common types**
-- **Custom types**
+- **Common Types**
+- **Custom Types**
 
 ### System Types
 - Int
